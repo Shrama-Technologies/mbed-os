@@ -170,6 +170,29 @@
         "public": false,
         "supported_toolchains": ["ARM"]
     },
+    "VERTEXCOM": {
+        "inherits": ["Target"],
+        "core" : "Cortex-M3",
+        "supported_toolchains":["GCC_ARM"]
+    },
+    "VC7351_DK": {
+        "inherits": ["VERTEXCOM"],
+        "extra_labels":["VERTEXCOM" ,"VC7xxx", "VC7351" , "VC_sdk"],
+        "macros_add": ["MBED_CONF_RTOS_PRESENT", "MBED_RTOS_CONF_PRESENT", "CONFIG_MCU_vc7351a" , "CONFIG_INTERRUPT_CALLBACK=1"],
+        "device_has": ["INTERRUPTIN",
+                    "LPTICKER",
+                    "PORTIN",
+                    "PORTOUT",
+                    "WATCHDOG",
+                    "RTC",
+                    "SERIAL",
+                    "SERIAL_ASYNCH",
+                    "SERIAL_FC",
+                    "STDIO_MESSAGES"],
+        "forced_reset_timeout": 2,
+        "public": true,
+        "bootloader_supported": false
+    },
     "LPCTarget": {
         "inherits": ["Target"],
         "post_binary_hook": { "function": "LPCTargetCode.lpc_patch" },
