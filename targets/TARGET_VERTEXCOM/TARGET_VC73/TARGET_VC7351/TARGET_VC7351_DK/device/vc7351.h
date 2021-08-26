@@ -3821,10 +3821,21 @@ typedef struct
 
 typedef struct
 {
+    union {
+        struct {
+            volatile uint32_t M0_message : 30;
+            volatile uint32_t M0_WDT_reset : 1;
+            volatile const uint32_t M3_Error_status : 1;
+        } fields;
+    };
+} M0M3MSG_INT1_Type;
+
+typedef struct
+{
   __IOM uint32_t M3MSG_0;             /* (0x0000) M3 to M0 message register */
   __IOM uint32_t M3MSG_1;             /* (0x0004) M3 to M0 message register */
   __IOM uint32_t M0M3MSG_INT0;        /* (0x0008) M0 to M3 message status register */
-  __IOM uint32_t M0M3MSG_INT1;        /* (0x000C) M0 to M3 message status register */
+  M0M3MSG_INT1_Type M0M3MSG_INT1;     /* (0x000C) M0 to M3 message status register */
   __IOM uint32_t M3MSGIE_0;           /* (0x0010) MSG interrupt enable [31:0] */
   __IOM uint32_t M3MSGIE_1;           /* (0x0014) MSG interrupt enable [63:32] */
   __IM uint32_t  M0MSGSTS_0;          /* (0x0018) M0 message status */

@@ -57,6 +57,7 @@ void vcgpio_out_uninit(PinName pin);
 void vcgpio_in_uninit(PinName pin);
 void vcgpio_irq_enable(PinName port);
 void vcgpio_irq_disable(PinName port);
+void vcgpio_select_function(PinName pin, uint8_t funcid);
 
 #ifdef __cplusplus
 }

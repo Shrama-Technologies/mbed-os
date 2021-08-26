@@ -177,8 +177,8 @@
     },
     "VC7351_DK": {
         "inherits": ["VERTEXCOM"],
-        "extra_labels":["VERTEXCOM" ,"VC7xxx", "VC7351" , "VC_sdk"],
-        "macros_add": ["MBED_CONF_RTOS_PRESENT", "MBED_RTOS_CONF_PRESENT", "CONFIG_MCU_vc7351a" , "CONFIG_INTERRUPT_CALLBACK=1"],
+        "extra_labels":["VERTEXCOM" ,"VC73", "VC7351" , "VC7351_DK"],
+        "macros_add": ["CONFIG_INTERRUPT_CALLBACK=1"],
         "device_has": ["INTERRUPTIN",
                     "LPTICKER",
                     "PORTIN",

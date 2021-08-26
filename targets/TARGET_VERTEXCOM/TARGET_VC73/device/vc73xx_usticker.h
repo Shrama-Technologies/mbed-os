@@ -16,26 +16,31 @@
  * limitations under the License.
  */
 
-#ifndef VC73XX_FLASH_H
-#define VC73XX_FLASH_H
+#ifndef VC73XX_USTICKER_H
+#define VC73XX_USTICKER_H
 
 #include <stdint.h>
 #include <stddef.h>
 #include "device.h"
 #include "pinmap.h"
+#include "pinmap_ex.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void vcflash_disable_cache(void);
-void vcflash_enable_cache(void);
-void vcflash_write_enable(void);
-uint32_t vcflash_get_manuid(void);
-void vcflash_quad_enable(void);
+#define VC73XX_USTICKER_SECOND (937500UL) /* 120MHz SystemCoreClock */
+#define VC73XX_USTICKER_WIDTH  (16UL)
+
+void vc73xx_usticker_init(void);
+void vc73xx_usticker_start(void);
+void vc73xx_usticker_stop(void);
+void vc73xx_usticker_set(uint32_t value);
+void vc73xx_usticker_clear(void);
+uint32_t vc73xx_usticker_read(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* VC73XX_FLASH_H */
+#endif /* VC73XX_USTICKER_H */

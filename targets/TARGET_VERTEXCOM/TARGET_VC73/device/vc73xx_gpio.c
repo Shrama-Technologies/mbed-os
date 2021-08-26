@@ -18,7 +18,7 @@
 
 #include "vc73xx_gpio.h"
 
-static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum);
+static void _gpio_select_sf(uint8_t portNum, uint8_t pinNum, uint8_t funcid);
 static void _gpio_select_exti_sf(uint8_t portNum, uint8_t pinNum, vcgpio_cfg_t *cfg);
 
 void vcgpio_init(PinName pin, vcgpio_cfg_t *cfg)
@@ -94,7 +94,7 @@ void vcgpio_init(PinName pin, vcgpio_cfg_t *cfg)
     }
 
     if (cfg->used_as_gpio) {
-        _gpio_select_gpio_sf(portNum, pinNum);
+        _gpio_select_sf(portNum, pinNum, 0);
     }
 
     if (cfg->used_as_irq) {
@@ -134,7 +134,7 @@ void vcgpio_free(PinName pin)
     temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
     gpio->DAT = temp;
 
-    _gpio_select_gpio_sf(portNum, pinNum);
+    _gpio_select_sf(portNum, pinNum, 0);
 }
 
 int vcgpio_pin_out_read(PinName pin)
@@ -245,7 +245,7 @@ void vcgpio_out_uninit(PinName pin)
     temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
     gpio->DAT = temp;
 
-    _gpio_select_gpio_sf(portNum, pinNum);
+    _gpio_select_sf(portNum, pinNum, 0);
 }
 
 void vcgpio_in_uninit(PinName pin)
@@ -275,7 +275,7 @@ void vcgpio_in_uninit(PinName pin)
     temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
     gpio->DAT = temp;
 
-    _gpio_select_gpio_sf(portNum, pinNum);
+    _gpio_select_sf(portNum, pinNum, 0);
 }
 
 void vcgpio_irq_enable(PinName pin)
@@ -312,9 +312,16 @@ void vcgpio_irq_disable(PinName pin)
     }
 }
 
+void vcgpio_select_function(PinName pin, uint8_t funcid)
+{
+    uint8_t portNum = VC_PORT(pin);
+    uint8_t pinNum = VC_PIN(pin);
+    _gpio_select_sf(portNum, pinNum, funcid);
+}
+
 // Helper functions
 
-static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum)
+static void _gpio_select_sf(uint8_t portNum, uint8_t pinNum, uint8_t funcid)
 {
     uint32_t temp = 0;
 
@@ -323,12 +330,12 @@ static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum)
             if (pinNum < 8) {
                 temp = VC_GPIOA->SEL0;
                 temp &= ~VC_GPIO_IOA_SEL0_IOAx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL0_IOAx_GPIO(pinNum);
+                temp |= funcid << VC_GPIO_IOA_SEL0_IOAx_SEL_Pos(pinNum);
                 VC_GPIOA->SEL0 = temp;
             } else {
                 temp = VC_GPIOA->SEL1;
                 temp &= ~VC_GPIO_IOA_SEL1_IOAx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL1_IOAx_GPIO(pinNum);
+                temp |= funcid << VC_GPIO_IOA_SEL1_IOAx_SEL_Pos(pinNum);
                 VC_GPIOA->SEL1 = temp;
             }
             break;
@@ -336,12 +343,12 @@ static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum)
             if (pinNum < 8) {
                 temp = VC_GPIOB->SEL0;
                 temp &= ~VC_GPIO_IOB_SEL0_IOBx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL0_IOBx_GPIO(pinNum);
+                temp |= funcid << VC_GPIO_IOB_SEL0_IOBx_SEL_Pos(pinNum);
                 VC_GPIOB->SEL0 = temp;
             } else {
                 temp = VC_GPIOB->SEL1;
                 temp &= ~VC_GPIO_IOB_SEL1_IOBx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL1_IOBx_GPIO(pinNum);
+                temp |= funcid << VC_GPIO_IOB_SEL1_IOBx_SEL_Pos(pinNum);
                 VC_GPIOB->SEL1 = temp;
             }
             break;
@@ -349,19 +356,19 @@ static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum)
             if (pinNum < 8) {
                 temp = VC_GPIOC->SEL0;
                 temp &= ~VC_GPIO_IOC_SEL0_IOCx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL0_IOCx_GPIO(pinNum);
+                temp |= funcid << VC_GPIO_IOC_SEL0_IOCx_SEL_Pos(pinNum);
                 VC_GPIOC->SEL0 = temp;
             } else {
                 temp = VC_GPIOC->SEL1;
                 temp &= ~VC_GPIO_IOC_SEL1_IOCx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL1_IOCx_GPIO(pinNum);
+                temp |= funcid << VC_GPIO_IOC_SEL1_IOCx_SEL_Pos(pinNum);
                 VC_GPIOC->SEL1 = temp;
             }
             break;
         case PortD:
             temp = VC_GPIOD->SEL;
             temp &= ~VC_GPIO_IOD_SEL_IODx_SEL_Msk(pinNum);
-            temp |= VC_GPIO_SEL_IODx_GPIO(pinNum);
+            temp |= funcid << VC_GPIO_IOD_SEL_IODx_SEL_Pos(pinNum);
             VC_GPIOD->SEL = temp;
             break;
         default:

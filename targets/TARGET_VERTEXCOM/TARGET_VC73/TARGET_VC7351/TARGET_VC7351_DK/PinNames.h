@@ -94,7 +94,6 @@ typedef enum {
     PD_14 = 0x3E,
     PD_15 = 0x3F,
 
-    /* ARM-VC-ADDED */
     LED0 = PC_4,
     LED1 = PC_5,
 
@@ -105,7 +104,7 @@ typedef enum {
     SERIAL_TX = STDIO_UART_TX,
     SERIAL_RX = STDIO_UART_RX,
 
-    /* Board Controller UART (USB)*/ /* ARM-VC-ADDED */
+    /* Board Controller UART (USB)*/
     USBTX       = STDIO_UART_TX,
     USBRX       = STDIO_UART_RX,
 
