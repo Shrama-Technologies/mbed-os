@@ -157,6 +157,27 @@
         "tfm_delivery_dir": "",
         "public": false
     },
+	"VERTEXCOM": {
+        "inherits": ["Target"],
+        "core" : "Cortex-M3",
+        "supported_toolchains":["GCC_ARM"]
+    },
+    "VC7351_DK": {
+        "inherits": ["VERTEXCOM"],
+        "extra_labels":["VERTEXCOM", "VC73", "VC7351", "VC7351_DK", "VC_RADIO"],
+        "macros_add": ["CONFIG_INTERRUPT_CALLBACK=1"],
+        "device_has": ["INTERRUPTIN",
+                    "PORTIN",
+                    "PORTOUT",
+                    "WATCHDOG",
+                    "SERIAL",
+                    "SERIAL_ASYNCH",
+                    "SERIAL_FC",
+                    "STDIO_MESSAGES"],
+        "forced_reset_timeout": 2,
+        "public": true,
+        "bootloader_supported": false
+    },
     "CM4_UARM": {
         "inherits": [
             "Target"

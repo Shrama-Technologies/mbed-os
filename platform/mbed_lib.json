@@ -177,6 +177,10 @@
             "crash-capture-enabled": true,
             "fatal-error-auto-reboot-enabled": true
         },
+        "VC7351_DK": {
+            "crash-capture-enabled": true,
+            "fatal-error-auto-reboot-enabled": true
+        },
         "NUCLEO_F429ZI": {
             "crash-capture-enabled": true,
             "fatal-error-auto-reboot-enabled": true

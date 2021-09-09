@@ -20,6 +20,9 @@
         "NUCLEO_F411RE": {
             "storage_type": "TDB_INTERNAL"
         },
+        "VC7351_DK": {
+            "storage_type": "TDB_INTERNAL"
+        },
         "NUCLEO_F429ZI": {
             "storage_type": "TDB_INTERNAL"
         },

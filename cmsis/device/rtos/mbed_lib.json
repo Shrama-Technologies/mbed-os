@@ -68,6 +68,9 @@
         "*": {
             "target.boot-stack-size": "0x400"
         },
+        "VERTEXCOM": {
+            "idle-thread-stack-size-debug-extra": 128
+        },
         "STM": {
             "idle-thread-stack-size-debug-extra": 128
         },
